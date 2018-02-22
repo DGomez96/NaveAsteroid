@@ -1,6 +1,7 @@
 
 package danielgomezgil.nave;
 
+import javafx.scene.paint.Color;
 import javafx.scene.shape.Polygon;
 public class Asteroide {
     //Variables de clase
@@ -9,10 +10,12 @@ public class Asteroide {
     
     public Asteroide(){
     asteroide = new Polygon();
+    asteroide.setFill(Color.RED);
         asteroide.getPoints().addAll(new Double[]{
             0.0, 0.0,
             0.0, 20.0,
-            50.0, 20.0, 
+            50.0, 20.0,
+            50.0, 20.0,
          });        
     }
     public Polygon getAsteroide(){

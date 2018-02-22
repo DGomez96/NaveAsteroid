@@ -50,6 +50,9 @@ public class Nave {
         geonave.getChildren().add(turbider);
         geonave.getChildren().add(turbiizq); 
         geonave.setVisible(false);
+        
+        geonave.setLayoutX(navefu.getX());
+        geonave.setLayoutY(navefu.getY());
     }
     
 
@@ -125,8 +128,13 @@ public class Nave {
         
         navefu.setX(posinaveX + velX);
         navefu.setY(posinaveY + velY);
+
+        geonave.setLayoutX(navefu.getX() - 400);
+        geonave.setLayoutY(navefu.getY() - 300);
+        
         
     }
+    
     
     public void rota360(){
         if (navefu.getRotate() >= 360  ){
@@ -164,7 +172,7 @@ public class Nave {
     }
     public int MaxVelo(int velo){
         if (naveSP >= velo){
-                       naveSP = velo;
+            naveSP = velo;
       }
         return naveSP;
     }
@@ -183,7 +191,10 @@ public class Nave {
     public Rectangle morro(){
         return morro;
     }
-    
+    public Boolean getGeo( boolean valor){
+        geonave.setVisible(valor);
+        return false;
+    }
     public ImageView naveFuego(){
         return navefu;
     }
@@ -211,6 +222,7 @@ public class Nave {
     public void setRotacionGeo (double valor){
       geonave.setRotate(valor);
     }
+    
     
     public double getRotacionFuego(){
         navefu.getRotate();
@@ -256,6 +268,13 @@ public class Nave {
         geonave.setLayoutX(X);
     }
     
+//  public void setTXGeo(double X){
+//      geonave.setTranslateX(X);
+//  }
+//  public void setTYGeo (double Y){
+//      geonave.setTranslateY(Y);
+//  }
+    
     public void setYFuego(double Y){
         navefu.setY(Y);
     }
@@ -282,6 +301,12 @@ public class Nave {
     
     public double getXFreno(){
       return navez.getX();
+    }
+    public double getXGeo(){
+        return geonave.getLayoutX();
+    }
+    public double getYGeo(){
+        return geonave.getLayoutY();
     }
     
     public double getYFuego(){
