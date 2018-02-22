@@ -29,16 +29,16 @@ public class Main extends Application {
    //Variables de Nave y Balas 
     String fondo = "fondo.jpg";
     int numAste = 15;
-    Nave nave = new Nave();
-    Bala bala;
+    public static Nave nave = new Nave();
+    Bala bala = new Bala();
     Label fin = new Label("Game Over , Good Luck the next...");
     Label presion = new Label("Presiona 'N' Para reiniciar el juego" );
+    public static Pane root = new Pane();
     ArrayList<Asteroide> listaAsteroides = new ArrayList();
     // Booleana
      Boolean gameOver;
     @Override
         public void start(Stage primaryStage) {
-        Pane root = new Pane();
         root.setStyle("-fx-background-image: url('" + fondo + "');"
                       + "-fx-background-position: center center;"
                       + "-fx-background-repeat: strech;");
@@ -86,21 +86,22 @@ public class Main extends Application {
                    nave.MaxVelo(10);
                    nave.setVisibilidadFreno(false);
             break;
-            
+ 
             case RIGHT:
             //Tecla derecha
                 nave.GiroR(2.0);
-  
             break;
+            
             case LEFT:
                 nave.GiroI(2.0);
                 //Tecla Izquierda
             break;
+            
             case SPACE:
             bala.newBala();
             //Añado a root
-            root.getChildren().add(bala.getBala());
             break;
+            
             case Z:
                 nave.freno(true);
                 if (nave.freno(false) == nave.freno(false) ){

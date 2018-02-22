@@ -19,36 +19,38 @@ public class Bala {
     double veloBY; //Velocidad Bala Y inicial
     double posiBalaX;
     double posiBalaY;
-    Nave nave;
-    Bala bala;
     int numBala;
-    ArrayList<Bala> listaBala = new ArrayList();
-    private final Circle formBala = new Circle();
+    ArrayList<Circle> listaBala = new ArrayList();
+    private Circle formBala = new Circle();
+    
     public Bala(){
         formBala.setRadius(5);
         formBala.setFill(Color.LIGHTSKYBLUE);
     }
+    
     public void newBala(){
-        bala = new Bala();
-                numBala += 1 ;
-                listaBala.add(bala);
-                bala.visibilidad(true);
-                bala.posiX(nave.getXFuego() + 30);
-                bala.posiY(nave.getYFuego() + 26);
-                posiBalaX = veloBala * Math.cos(nave.getANMV());
-                posiBalaY = veloBala * Math.sin(nave.getANMV());
-                veloBala += (3 *2) ;
-                if (veloBala > 15){
-                    veloBala = 15;
-                }
+        formBala = new Circle();
+        formBala.setVisible(true);
+        numBala += 1 ;
+        listaBala.add(formBala);
+        formBala.setCenterX(Main.nave.getXFuego() + 30);
+        formBala.setCenterY(Main.nave.getYFuego() + 26);
+        Main.root.getChildren().add(formBala);
+        posiBalaX = veloBala * Math.cos(Main.nave.getANMV());
+        posiBalaY = veloBala * Math.sin(Main.nave.getANMV());
+        veloBala += (3 *2);
+        System.out.println("joe picha funciona");
+        if (veloBala > 15){
+            veloBala = 15;
+        }
     }
     public void apuntoBala(){
-        if ( bala != null ){
+        if ( formBala != null ){
             for (int i = 0 ; i < listaBala.size(); i++) {
-                Bala lis = listaBala.get(i);
-                lis.posiX(bala.getX() + posiBalaX);
-                lis.posiY(bala.getY() + posiBalaY); 
-                }
+                Circle lis = listaBala.get(i);
+                lis.setCenterX(lis.getCenterX() + posiBalaX);
+                lis.setCenterY(lis.getCenterY() + posiBalaY); 
+            }
        }
     }
     public void posiX( double posi){
