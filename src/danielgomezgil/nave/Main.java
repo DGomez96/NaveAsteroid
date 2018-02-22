@@ -27,20 +27,13 @@ import javafx.scene.shape.Shape;
 public class Main extends Application {
 
    //Variables de Nave y Balas 
-    double veloBala = 0.0; //Velocidad Bala 
-    double veloBX; //Velocidad Bala X inicial
-    double veloBY; //Velocidad Bala Y inicial
-    double posiBalaX;
-    double posiBalaY;
     String fondo = "fondo.jpg";
     int numAste = 15;
-    int numBala;
     Nave nave = new Nave();
     Bala bala;
     Label fin = new Label("Game Over , Good Luck the next...");
     Label presion = new Label("Presiona 'N' Para reiniciar el juego" );
     ArrayList<Asteroide> listaAsteroides = new ArrayList();
-    ArrayList<Bala> listaBala = new ArrayList();
     // Booleana
      Boolean gameOver;
     @Override
@@ -85,52 +78,42 @@ public class Main extends Application {
        
         scene.setOnKeyPressed((KeyEvent event) -> {
         switch(event.getCode()){
-                case UP:
+     
+            case UP:
                     //Pulsado arriba
 
                    nave.naveSP += 2.0; 
                    nave.MaxVelo(10);
                    nave.setVisibilidadFreno(false);
-                    break;
-                case RIGHT:
-                    //Tecla derecha
-                    nave.GiroR(2.0);
+            break;
+            
+            case RIGHT:
+            //Tecla derecha
+                nave.GiroR(2.0);
   
-                    break;
-                case LEFT:
-                    nave.GiroI(2.0);
-                    //Tecla Izquierda
-                    break;
-               case SPACE:
-                   bala = new Bala();
-                   numBala += 1 ;
-                   listaBala.add(bala);
-                   bala.visibilidad(true);
-                   bala.posiX(nave.getXFuego() + 30);
-                   bala.posiY(nave.getYFuego() + 26);
-                   root.getChildren().add(bala.getBala());
-                    posiBalaX = veloBala * Math.cos(nave.getANMV());
-                    posiBalaY = veloBala * Math.sin(nave.getANMV());
-                   veloBala += (3 *2) ;
-                    if (veloBala > 15){
-                        veloBala = 15;
-                    }
-                    //añadimos a Root
-                     break;
-                case Z:
+            break;
+            case LEFT:
+                nave.GiroI(2.0);
+                //Tecla Izquierda
+            break;
+            case SPACE:
+            bala.newBala();
+            //Añado a root
+            root.getChildren().add(bala.getBala());
+            break;
+            case Z:
+                nave.freno(true);
+                if (nave.freno(false) == nave.freno(false) ){
                     nave.freno(true);
-                    if (nave.freno(false) == nave.freno(false) ){
-                        nave.freno(true);
-                    }else{
-                        nave.freno(false);
-                    }
-                    
-                    break;
+                }else{
+                    nave.freno(false);
+                }
+                break;    
                 case N:
                     gameOver = false;
                     fin.setVisible(false);
                     nave.setVisibilidadNoFuego(true);
-                    break;
+                break;
             }
         scene.setOnKeyReleased((KeyEvent event1) -> {   
             nave.setVisibilidadNoFuego(true);
@@ -179,99 +162,16 @@ public class Main extends Application {
                 //Movimiento del asteroid
                 //Rotacion entre 0 y 360
                 nave.rota360();
-                
                 // Apunto a Bala
-                if ( bala != null ){
-                    for (int i = 0 ; i < listaBala.size(); i++) {
-                    Bala lis = listaBala.get(i);
-                    lis.posiX(bala.getX() + posiBalaX);
-                    lis.posiY(bala.getY() + posiBalaY); 
-                    }
-                }
-            
-                     
-                //Primer Codigo de Rotacion
-               /* if (navefu.getRotate() >= -10 && navefu.getRotate() <= 10){
-                    // Posicion de la bala
-                    bala.setCenterX(navefu.getX() + 22 );
-                    bala.setCenterY(navefu.getY());
-                }else if  (navefu.getRotate() >= 10 && navefu.getRotate() <= 91 || navefu.getRotate() <= -200 && navefu.getRotate() >= -271){
-                    // Posicion de la bala
-                    bala.setCenterX(navefu.getX() + 55);
-                    bala.setCenterY(navefu.getY() +30);
-                }else if  (navefu.getRotate() >= 91 && navefu.getRotate() <= 180 ||navefu.getRotate() <= -159 && navefu.getRotate() >= -181  ){
-                    //Posicionde la Bala
-                    bala.setCenterX(navefu.getX() + 22);
-                    bala.setCenterY(navefu.getY() +60);
-                }else if  (navefu.getRotate() >= 181 && navefu.getRotate() <= 280 || navefu.getRotate() <= -10 && navefu.getRotate() >= -94 ){
-                    //Posicion la Bala
-                    bala.setCenterX(navefu.getX() - 10);
-                    bala.setCenterY(navefu.getY() +30);
-                } */
+                bala.apuntoBala();
                 //vuelta al plano
                 nave.vuelve();
-//                   if (getColision(asteroide.getAsteroide(), bala.getBala())){
-//                       asteroide.visible(false);
-//                       asteroide.transX(asteroide.getLayoutX() + 5000);
-//                    }
-//                  
-//                  if (getColisionN(asteroide.getAsteroide(), nave.morro)){
-//                       nave.morro.setVisible(false);
-//                      nave.setVisibilidadFuego(false);
-//                      gameOver = true;
-//                      
-//                   }
-            
-                //movBol();
-               // rstBol();
                
                 }
           }
       };
    movNav.start(); 
-}
-        
-        
-        
-        
-        // Metodo para movimiento de Bola y seguimiento del morro
-    /*   private void movBol(){
-           /* posiBalaX = bala.getCenterX();
-            posiBalaY = bala.getCenterY();
-            veloBX = veloBala * Math.cos(anguloMv);
-            veloBY = veloBala * Math.sin(anguloMv);
-            anguloMv = Math.toRadians(navefu.getRotate());
-            bala.setCenterX(posiBalaX + veloBala);
-            bala.setCenterY(posiBalaY + veloBala);
-           
-           bala.setCenterX((posiBalaX + navefu.getX())+65);
-           bala.setCenterY((posiBalaY + navefu.getY())+23);
-         };*/
-       //Reseteo de Bola
-
-/*        private void rstBol(){
-            if (bala.getTranslateX() >= 800 ){
-                    
-                }else if(bala.getTranslateX() <= -400 ){
-                    bala.setTranslateX(bala.getTranslateX() + 402);
-                    veloBala = 0.0;
-                    bala.setVisible(false);
-                }else if (bala.getTranslateY() <= -300){
-                    bala.setTranslateY(bala.getTranslateY() + 300);
-                    veloBala = 0.0;
-                    bala.setVisible(false);
-                }else if (bala.getTranslateY() >= 300){
-                    bala.setTranslateY(bala.getTranslateY() - 300);
-                    veloBala = 0.0;
-                    bala.setVisible(false);
-                }else if (bala.getTranslateX() >= 400){
-                    bala.setTranslateX(bala.getTranslateX() - 402);
-                    veloBala = 0.0;
-                    bala.setVisible(false);
-                }
-        }*/
-        //Metodo para Freno
-
+}       
         private boolean getColision(Polygon obj1, Circle obj2){
             return !Shape.intersect(obj1, obj2).getBoundsInLocal().isEmpty();
         }

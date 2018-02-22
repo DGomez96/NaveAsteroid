@@ -55,26 +55,21 @@ public class Nave {
 
     public void vuelve(){
                 if (navefu.getX() >= 800 ){
-                    System.out.println("getX " + navefu.getX());
                     navefu.setX(-1);
                     navenofu.setX(-1);
                     navez.setX(-1);
-                    System.out.println("caso 1");
                 }else if(navefu.getX() <= -2 ){
                     navefu.setX(800);
                     navenofu.setX(800);
                     navez.setX(800);
-                    System.out.println("caso 2");
                 }else if ( navefu.getY() <= 0){
                     navefu.setY(600);
                     navenofu.setY(600);
                     navez.setY(600);
-                    System.out.println("caso 3");
                 }else if (navefu.getY() >= 600){
                     navefu.setY(0);
                     navenofu.setY(0);
                     navez.setY(0);
-                    System.out.println("caso 4");
                 }
     }
     public void autoVisi(){
@@ -131,7 +126,6 @@ public class Nave {
         navefu.setX(posinaveX + velX);
         navefu.setY(posinaveY + velY);
         
-        System.out.println("getY " + navefu.getY());
     }
     
     public void rota360(){
