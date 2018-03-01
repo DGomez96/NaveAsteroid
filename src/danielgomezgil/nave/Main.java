@@ -12,6 +12,7 @@ import javafx.application.Application;
 import javafx.scene.Scene; 
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import static javafx.scene.input.KeyCode.UP;
 import javafx.scene.layout.Pane;
 import javafx.scene.shape.Circle;
@@ -34,6 +35,7 @@ public class Main extends Application {
     // Variables de Clase
     public static Nave nave = new Nave();
     public static Pane root = new Pane();
+    Scene scene;
     Asteroide asteroide;
     Bala bala = new Bala();
     // ArrayLists de Balas y Asteroides
@@ -46,12 +48,12 @@ public class Main extends Application {
         public void start(Stage primaryStage) {
         primaryStage.getIcons().add(new Image("Logo/Logo.png"));
         fin.setStyle("--fx-background-color: #" + Color);
-        root.setStyle("-fx-background-image: url('" + fondo + "');"
-                      + "-fx-background-position: center center;"
-                      + "-fx-background-repeat: strech;");
-            
-        Scene scene = new Scene(root, 800, 600);
-
+        Image brochita = new Image("brocha.png");
+        ImageView brocha = new ImageView(brochita);
+        root.getChildren().add(brocha);
+        brocha.on
+        scene = new Scene(root, 800, 600);
+        scene.getStylesheets().add("css/style.css");
         //Nave sin fuego
         nave.setXNoFuego(nave.posinaveX);
         nave.setYNoFuego(nave.posinaveY);
@@ -118,6 +120,7 @@ public class Main extends Application {
                 asteroide = new Asteroide();
                 root.getChildren().add(asteroide.getAsteroide());
                 listaAsteroides.add(asteroide);
+                System.out.println(asteroide.posiAX);
                 break;
             }
         scene.setOnKeyReleased((KeyEvent event1) -> {   
@@ -157,7 +160,6 @@ public class Main extends Application {
                 nave.decreAn();
                 /*Posicion y Rotacion de la Nave Geometrica,Imagen y Asteroides*/
                 nave.rotaAUTO();
-                
                 //Rotacion entre 0 y 360
                 nave.rota360();
                 //Voy sumando asteroides
@@ -172,14 +174,13 @@ public class Main extends Application {
                     bala = listaBala.get(i);
                     bala.mover();
                 }
-                
+
                 if (asteroide != null){
                     if (getColisionN(asteroide.getAsteroide(),nave.morro)){
                         gameOver = true;
                     }else if (getColision(asteroide.getAsteroide(),bala.getBala())){
                         asteroide.visible(false);
                         listaAsteroides.remove(asteroide.getAsteroide());
-                        System.out.println("Entro! ");
                     }
                 }
                 //vuelta al plano
@@ -195,8 +196,10 @@ public class Main extends Application {
         }
         private boolean getColisionN(Polygon obj1, Rectangle obj2){
             return !Shape.intersect(obj1, obj2).getBoundsInLocal().isEmpty();
-        }     
-
+        }    
+        public void perritoChico(){
+            scene.getStylesheets().add("css/style2.css");
+        }
 }
 
 

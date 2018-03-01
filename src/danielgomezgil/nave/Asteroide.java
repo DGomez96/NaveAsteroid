@@ -7,8 +7,8 @@ public class Asteroide {
     //Variables de clase
     Polygon asteroide;
     double veloA = 6;
-    double posiAX;
-    double posiAY;
+    double posiAX = 0 ; //Math.random() * (255 - 0) + 0;
+    double posiAY = 0 ;
     //*****************
     
     public Asteroide(){
@@ -26,11 +26,10 @@ public class Asteroide {
     public void mover(){
         asteroide.setTranslateX(Main.nave.getXFuego() + 30);
         asteroide.setTranslateY(Main.nave.getYFuego() + 26);
-        posiAX = 255 ; //Math.random() * (255 - 0) + 0;
-        posiAY = 255 ; //Math.random() * (400 - 0) + 0;
-        asteroide.setLayoutX(asteroide.getLayoutX() + posiAX);
-        asteroide.setLayoutY(asteroide.getLayoutY() + posiAY);
-
+        posiAX +=15;
+        posiAY +=15;
+        asteroide.setTranslateX(asteroide.getLayoutX() + posiAX);
+        asteroide.setTranslateY(asteroide.getLayoutY() + posiAY);
     }
     
     
