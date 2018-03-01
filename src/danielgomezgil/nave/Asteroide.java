@@ -16,7 +16,8 @@ public class Asteroide {
             0.0, 20.0,
             50.0, 20.0,
             50.0, 20.0,
-         });        
+         });
+    
     }
     public Polygon getAsteroide(){
         return asteroide;

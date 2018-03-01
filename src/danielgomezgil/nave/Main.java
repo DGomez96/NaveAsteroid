@@ -11,6 +11,7 @@ import javafx.scene.input.KeyEvent;
 import javafx.application.Application;
 import javafx.scene.Scene; 
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
 import static javafx.scene.input.KeyCode.UP;
 import javafx.scene.layout.Pane;
 import javafx.scene.shape.Circle;
@@ -41,6 +42,7 @@ public class Main extends Application {
      Boolean gameOver = false;
     @Override
         public void start(Stage primaryStage) {
+        primaryStage.getIcons().add(new Image("Logo/Logo.png"));
         fin.setStyle("--fx-background-color: #" + Color);
         root.setStyle("-fx-background-image: url('" + fondo + "');"
                       + "-fx-background-position: center center;"
@@ -63,11 +65,6 @@ public class Main extends Application {
         nave.setVisibilidadFreno(false);
         root.getChildren().add(nave.navez);
         
-        // Arraylist de Asteroides
-        for ( int i = 0 ; i<numAste ; i++ ){
-            Asteroide asteroide = new Asteroide();
-            listaAsteroides.add(asteroide);
-        }
  
         asteroide.setLX(300);
         asteroide.setLY(400);
@@ -127,7 +124,7 @@ public class Main extends Application {
         primaryStage.setTitle("Asteroid Game por Daniel Gómez");
         primaryStage.setScene(scene);
         primaryStage.show();
-        
+
          AnimationTimer movNav = new AnimationTimer(){
             @Override         
             public void handle(long now){
@@ -168,6 +165,8 @@ public class Main extends Application {
                 asteroide.autoRotacion(4);
                 //Rotacion entre 0 y 360
                 nave.rota360();
+                //Bala
+
                 // Apunto a Bala
                 if ( bala != null ){
                     for (int i = 0 ; i < listaBala.size(); i++) {
