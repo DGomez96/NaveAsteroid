@@ -51,7 +51,7 @@ public class Main extends Application {
         Image brochita = new Image("brocha.png");
         ImageView brocha = new ImageView(brochita);
         root.getChildren().add(brocha);
-        brocha.on
+        brocha.setOnMouseClicked();
         scene = new Scene(root, 800, 600);
         scene.getStylesheets().add("css/style.css");
         //Nave sin fuego
