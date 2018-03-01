@@ -268,12 +268,6 @@ public class Nave {
         geonave.setLayoutX(X);
     }
     
-//  public void setTXGeo(double X){
-//      geonave.setTranslateX(X);
-//  }
-//  public void setTYGeo (double Y){
-//      geonave.setTranslateY(Y);
-//  }
     
     public void setYFuego(double Y){
         navefu.setY(Y);

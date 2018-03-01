@@ -26,18 +26,20 @@ import javafx.scene.shape.Shape;
  */
 
 public class Main extends Application {
-
-   //Variables de Nave y Balas 
+    //!---------------------------------------------------------------------!
+   // String & Labels
     String fondo = "fondo.jpg";
-    int numAste = 15;
-    public static Nave nave = new Nave();
-    Bala bala = new Bala();
-    Asteroide asteroide = new Asteroide();
-    Label fin = new Label("Game Over , Good Luck the next...\n Manten N  para Reiniciar Juego");
     String Color = "51A3A3";
+    Label fin = new Label("Game Over , Good Luck the next...\n Manten N  para Reiniciar Juego");
+    // Variables de Clase
+    public static Nave nave = new Nave();
     public static Pane root = new Pane();
+    Asteroide asteroide;
+    Bala bala = new Bala();
+    // ArrayLists de Balas y Asteroides
     ArrayList<Bala> listaBala = new ArrayList();
     ArrayList<Asteroide> listaAsteroides = new ArrayList();
+    //!---------------------------------------------------------------------!
     // Booleana
      Boolean gameOver = false;
     @Override
@@ -65,15 +67,11 @@ public class Main extends Application {
         nave.setVisibilidadFreno(false);
         root.getChildren().add(nave.navez);
         
- 
-        asteroide.setLX(300);
-        asteroide.setLY(400);
+        // Arraylist de Asteroides
         
         fin.setVisible(false);
         root.getChildren().add(fin);
-        
         root.getChildren().add(nave.GetGeonave());
-        root.getChildren().add(asteroide.getAsteroide());
         scene.setOnKeyPressed((KeyEvent event) -> {
         switch(event.getCode()){
      
@@ -95,9 +93,11 @@ public class Main extends Application {
             break;
             
             case SPACE:
-            bala.disparo();
-            //Añado a root
-            break;
+                bala = new Bala();
+                listaBala.add(bala);
+                bala.disparo();
+                //Añado a root
+                break;
             
             case Z:
                 nave.freno(true);
@@ -106,13 +106,19 @@ public class Main extends Application {
                 }else{
                     nave.freno(false);
                 }
-                break;    
+                break;   
+                
             case N:
                 gameOver = false;
                 fin.setVisible(false);
                 nave.setVisibilidadNoFuego(true);
- 
-            break;
+                break;
+                
+            case A:
+                asteroide = new Asteroide();
+                root.getChildren().add(asteroide.getAsteroide());
+                listaAsteroides.add(asteroide);
+                break;
             }
         scene.setOnKeyReleased((KeyEvent event1) -> {   
             nave.setVisibilidadNoFuego(true);
@@ -128,7 +134,6 @@ public class Main extends Application {
          AnimationTimer movNav = new AnimationTimer(){
             @Override         
             public void handle(long now){
-                System.out.println(gameOver);
                  if (gameOver == true){
                 fin.setTranslateX(400);
                 fin.setTranslateY(300);
@@ -141,6 +146,7 @@ public class Main extends Application {
                 asteroide.visible(false);
                 fin.setVisible(true);    
                }else if (gameOver == false){
+               
                 //Posiciones actualizandose de Nave Fuego,Nave no Fuego y GeoNave + Movimiento segun el angulo de la nave
                 nave.movAN();
                 //Visibilidad de la nave sin fuego y con Fuego
@@ -151,34 +157,34 @@ public class Main extends Application {
                 nave.decreAn();
                 /*Posicion y Rotacion de la Nave Geometrica,Imagen y Asteroides*/
                 nave.rotaAUTO();
-                if (numAste == 0){
-                 numAste = 0 ;   
-                } else if (numAste > 0) {
-                    numAste -= 1;
-                }
-                if (getColisionN(asteroide.getAsteroide(),nave.morro)){
-                    gameOver = true;
-                }else if (getColision(asteroide.getAsteroide(),bala.getBala())){
-                    asteroide.visible(false);
-                }
-                //Movimiento del asteroid
-                asteroide.autoRotacion(4);
+                
                 //Rotacion entre 0 y 360
                 nave.rota360();
-                //Bala
-
-                // Apunto a Bala
-                if ( bala != null ){
-                    for (int i = 0 ; i < listaBala.size(); i++) {
-                        Bala lis = listaBala.get(i);
-                        lis.posiX(lis.getX() + bala.posiBalaX);
-                        lis.posiY(lis.getY() + bala.posiBalaY); 
+                //Voy sumando asteroides
+                
+                for ( int i = 0 ; i < listaAsteroides.size() ; i++){
+                    asteroide = listaAsteroides.get(i);
+                    asteroide.mover();
+                }
+                
+                // Sumo +1 Bala a la Lista y la muevo
+                for (int i = 0 ; i < listaBala.size(); i++) {
+                    bala = listaBala.get(i);
+                    bala.mover();
+                }
+                
+                if (asteroide != null){
+                    if (getColisionN(asteroide.getAsteroide(),nave.morro)){
+                        gameOver = true;
+                    }else if (getColision(asteroide.getAsteroide(),bala.getBala())){
+                        asteroide.visible(false);
+                        listaAsteroides.remove(asteroide.getAsteroide());
+                        System.out.println("Entro! ");
                     }
-               }
-    
+                }
                 //vuelta al plano
                 nave.vuelve();
-               
+              
                 }
           }
       };

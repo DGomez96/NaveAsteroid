@@ -6,6 +6,9 @@ import javafx.scene.shape.Polygon;
 public class Asteroide {
     //Variables de clase
     Polygon asteroide;
+    double veloA = 6;
+    double posiAX;
+    double posiAY;
     //*****************
     
     public Asteroide(){
@@ -19,6 +22,18 @@ public class Asteroide {
          });
     
     }
+    
+    public void mover(){
+        asteroide.setTranslateX(Main.nave.getXFuego() + 30);
+        asteroide.setTranslateY(Main.nave.getYFuego() + 26);
+        posiAX = 255 ; //Math.random() * (255 - 0) + 0;
+        posiAY = 255 ; //Math.random() * (400 - 0) + 0;
+        asteroide.setLayoutX(asteroide.getLayoutX() + posiAX);
+        asteroide.setLayoutY(asteroide.getLayoutY() + posiAY);
+
+    }
+    
+    
     public Polygon getAsteroide(){
         return asteroide;
     }
