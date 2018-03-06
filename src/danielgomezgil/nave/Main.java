@@ -6,6 +6,7 @@
 package danielgomezgil.nave;
 
 import java.util.ArrayList;
+import java.util.Random;
 import javafx.animation.AnimationTimer;
 import javafx.scene.input.KeyEvent;
 import javafx.application.Application;
@@ -38,6 +39,7 @@ public class Main extends Application {
     Scene scene;
     Asteroide asteroide;
     Bala bala = new Bala();
+
     // ArrayLists de Balas y Asteroides
     ArrayList<Bala> listaBala = new ArrayList();
     ArrayList<Asteroide> listaAsteroides = new ArrayList();
@@ -51,8 +53,9 @@ public class Main extends Application {
         Image brochita = new Image("brocha.png");
         ImageView brocha = new ImageView(brochita);
         root.getChildren().add(brocha);
-        brocha.setOnMouseClicked();
-        scene = new Scene(root, 800, 600);
+       // brocha.setOnMouseClicked();
+        
+        scene = new Scene(root, 800 , 600);
         scene.getStylesheets().add("css/style.css");
         //Nave sin fuego
         nave.setXNoFuego(nave.posinaveX);
@@ -116,12 +119,6 @@ public class Main extends Application {
                 nave.setVisibilidadNoFuego(true);
                 break;
                 
-            case A:
-                asteroide = new Asteroide();
-                root.getChildren().add(asteroide.getAsteroide());
-                listaAsteroides.add(asteroide);
-                System.out.println(asteroide.posiAX);
-                break;
             }
         scene.setOnKeyReleased((KeyEvent event1) -> {   
             nave.setVisibilidadNoFuego(true);
@@ -130,6 +127,13 @@ public class Main extends Application {
             nave.setRotacionNoFuego(nave.getRotacionFuego());
             });
         });
+        //Recorrer Lista Asteroides
+        for ( int i = 0 ; i < 3; i++){
+            asteroide = new Asteroide();
+            //System.out.println("Ha hecho" + i + "Asteroides la lista consta de : " +listaAsteroides.get(i));
+            listaAsteroides.add(asteroide);
+            root.getChildren().add(asteroide.getAsteroide());
+        }
         primaryStage.setTitle("Asteroid Game por Daniel Gómez");
         primaryStage.setScene(scene);
         primaryStage.show();
@@ -142,14 +146,14 @@ public class Main extends Application {
                 fin.setTranslateY(300);
                 fin.setScaleX(2);
                 fin.setScaleY(2);
-
+                
                 nave.setVisibilidadFreno(false);
                 nave.setVisibilidadFuego(false);
                 nave.setVisibilidadNoFuego(false);
                 asteroide.visible(false);
                 fin.setVisible(true);    
                }else if (gameOver == false){
-               
+                
                 //Posiciones actualizandose de Nave Fuego,Nave no Fuego y GeoNave + Movimiento segun el angulo de la nave
                 nave.movAN();
                 //Visibilidad de la nave sin fuego y con Fuego
@@ -162,9 +166,10 @@ public class Main extends Application {
                 nave.rotaAUTO();
                 //Rotacion entre 0 y 360
                 nave.rota360();
-                //Voy sumando asteroides
-                
-                for ( int i = 0 ; i < listaAsteroides.size() ; i++){
+
+
+                //Mover asteroides
+                for (int i = 0 ; i < listaAsteroides.size(); i++){
                     asteroide = listaAsteroides.get(i);
                     asteroide.mover();
                 }
@@ -185,6 +190,8 @@ public class Main extends Application {
                 }
                 //vuelta al plano
                 nave.vuelve();
+
+
               
                 }
           }
@@ -197,9 +204,6 @@ public class Main extends Application {
         private boolean getColisionN(Polygon obj1, Rectangle obj2){
             return !Shape.intersect(obj1, obj2).getBoundsInLocal().isEmpty();
         }    
-        public void perritoChico(){
-            scene.getStylesheets().add("css/style2.css");
-        }
 }
 
 

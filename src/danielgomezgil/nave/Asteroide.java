@@ -1,15 +1,19 @@
 
 package danielgomezgil.nave;
 
+import java.util.Random;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Polygon;
 public class Asteroide {
     //Variables de clase
     Polygon asteroide;
-    double veloA = 6;
-    double posiAX = 0 ; //Math.random() * (255 - 0) + 0;
-    double posiAY = 0 ;
+    double veloAX = 1;
+    double veloAY = 1; 
+    public double posiAX = 0 ; //Math.random() * (255 - 0) + 0;
+    public double posiAY = 0 ;
+    Random aleato = new Random();
     //*****************
+    
     
     public Asteroide(){
     asteroide = new Polygon();
@@ -20,18 +24,16 @@ public class Asteroide {
             50.0, 20.0,
             50.0, 20.0,
          });
-    
+        asteroide.setTranslateX(aleato.nextInt(800));
+        asteroide.setTranslateY(aleato.nextInt(600));
     }
     
     public void mover(){
-        asteroide.setTranslateX(Main.nave.getXFuego() + 30);
-        asteroide.setTranslateY(Main.nave.getYFuego() + 26);
-        posiAX +=15;
-        posiAY +=15;
-        asteroide.setTranslateX(asteroide.getLayoutX() + posiAX);
-        asteroide.setTranslateY(asteroide.getLayoutY() + posiAY);
+        
+        asteroide.setLayoutX(asteroide.getLayoutX() + veloAX);
+        asteroide.setLayoutY(asteroide.getLayoutY() + veloAY);
+        asteroide.setRotate(asteroide.getRotate() + 5);
     }
-    
     
     public Polygon getAsteroide(){
         return asteroide;
