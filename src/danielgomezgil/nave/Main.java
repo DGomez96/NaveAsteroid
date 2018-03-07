@@ -33,6 +33,9 @@ import javafx.scene.text.Text;
 
 public class Main extends Application {
     //!---------------------------------------------------------------------!
+    //Mini asteroides
+    Asteroide asteroideMini;
+    Asteroide asteroideMini2;
     //Variable cambio de Style
     int cambioStyle = 0;
    // String & Labels
@@ -264,21 +267,21 @@ public class Main extends Application {
                             ++score;
                             textScore.setText(String.valueOf(score));
                             asteroide.visible(false);
-                            asteroide = new Asteroide(0.5);
-                            asteroide.setTX(400);
-                            asteroide.setTY(400);
-                            root.getChildren().add(asteroide.getAsteroide());
-                            listaAsteroides.add(asteroide);   
-                            asteroide = new Asteroide(0.5);
-                            asteroide.setTX(450);
-                            asteroide.setTY(450);
-                            root.getChildren().add(asteroide.getAsteroide());
-                            listaAsteroides.add(asteroide);
-                            listaBala.remove(balaelimi);
-                            listaAsteroides.remove(astelimi);                  
-                        }
+                            asteroideMini = new Asteroide(0.5);
+                            asteroideMini.setTX(posiAsteX);
+                            asteroideMini.setTY(posiAsteY);
+                            root.getChildren().add(asteroideMini.getAsteroide());  
+                            asteroideMini2 = new Asteroide(0.5);
+                            asteroideMini2.setTX(posiAsteX + 50);
+                            asteroideMini2.setTY(posiAsteY + 50);
+                            root.getChildren().add(asteroideMini2.getAsteroide());
+                            listaAsteroides.add(asteroideMini);
+                            listaAsteroides.add(asteroideMini2);
+                        }  
                     }
                 }
+                listaBala.remove(balaelimi);
+                listaAsteroides.remove(astelimi); 
                 
 
                 
