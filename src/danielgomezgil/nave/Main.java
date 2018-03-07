@@ -9,16 +9,21 @@ import java.util.ArrayList;
 import javafx.animation.AnimationTimer;
 import javafx.scene.input.KeyEvent;
 import javafx.application.Application;
+import javafx.geometry.Pos;
 import javafx.scene.Scene; 
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import static javafx.scene.input.KeyCode.UP;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
+import static javafx.scene.paint.Color.WHITE;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Polygon;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
+import javafx.scene.text.Font;
+import javafx.scene.text.Text;
  import javafx.stage.Stage; 
 
 /**
@@ -28,6 +33,8 @@ import javafx.scene.shape.Shape;
 
 public class Main extends Application {
     //!---------------------------------------------------------------------!
+    //Variable cambio de Style
+    int cambioStyle = 0;
    // String & Labels
     String fondo = "fondo.jpg";
     String Color = "51A3A3";
@@ -42,6 +49,9 @@ public class Main extends Application {
     Bala balaelimi;
     //Asteroide a eliminar
     Asteroide astelimi;
+    //Layout Score y Score
+    Text textScore;
+    int score;
     // ArrayLists de Balas y Asteroides
     ArrayList<Bala> listaBala = new ArrayList();
     ArrayList<Asteroide> listaAsteroides = new ArrayList();
@@ -54,9 +64,40 @@ public class Main extends Application {
         fin.setStyle("--fx-background-color: #" + Color);
         Image brochita = new Image("brocha.png");
         ImageView brocha = new ImageView(brochita);
+        brocha.setLayoutX(750);
+        brocha.setLayoutY(550);
         root.getChildren().add(brocha);
        // brocha.setOnMouseClicked();
-        
+
+       //Layouts para puntuaciones.
+       //Layout Principal
+       HBox paneScores = new HBox();
+       paneScores.setTranslateY(20);
+       paneScores.setMinWidth(800);
+       paneScores.setAlignment(Pos.CENTER);
+       paneScores.setSpacing(100);
+       root.getChildren().add(paneScores);
+
+       //Layout para puntuacion Actual
+       HBox paneCurrentScore = new HBox();
+       paneCurrentScore.setSpacing(10);
+       paneScores.getChildren().add(paneCurrentScore);
+
+       //Texto de la Etiqueta de la puntuacion
+       Text textTitleScore = new Text("Score: ");
+       textTitleScore.setFont(Font.font(15));
+       textTitleScore.setFill(WHITE);
+
+       //Texto para la puntuacion
+       textScore = new Text("0");
+       textScore.setFont(Font.font(15));
+       textScore.setFill(WHITE);
+
+       //Añadir textos
+       paneCurrentScore.getChildren().add(textTitleScore);
+       paneCurrentScore.getChildren().add(textScore);
+       root.getChildren().add(paneCurrentScore);
+       
         scene = new Scene(root, 800 , 600);
         scene.getStylesheets().add("css/style.css");
         //Nave sin fuego
@@ -114,7 +155,22 @@ public class Main extends Application {
                     nave.freno(false);
                 }
                 break;   
-                
+            case S: 
+                if (cambioStyle == 0 ){
+                    scene.getStylesheets().add("css/style1.css");
+                    cambioStyle = 1;
+                }else if ( cambioStyle == 1){
+                    scene.getStylesheets().add("css/style2.css");
+                    cambioStyle = 2;
+                }else if( cambioStyle == 2){
+                    scene.getStylesheets().add("css/style3.css");
+                    cambioStyle = 3 ;
+                }else if ( cambioStyle == 3){
+                    scene.getStylesheets().add("css/style.css");
+                    cambioStyle = 0;
+                }
+                System.out.println(cambioStyle);
+                break;
             case N:
                 gameOver = false;
                 fin.setVisible(false);
@@ -131,8 +187,7 @@ public class Main extends Application {
         });
         //Recorrer Lista Asteroides
         for ( int i = 0 ; i < 3; i++){
-            asteroide = new Asteroide();
-            //System.out.println("Ha hecho" + i + "Asteroides la lista consta de : " +listaAsteroides.get(i));
+            asteroide = new Asteroide(1);
             listaAsteroides.add(asteroide);
             root.getChildren().add(asteroide.getAsteroide());
         }
@@ -152,20 +207,25 @@ public class Main extends Application {
                 nave.setVisibilidadFreno(false);
                 nave.setVisibilidadFuego(false);
                 nave.setVisibilidadNoFuego(false);
-                asteroide.visible(false);
+
                 fin.setVisible(true);    
                }else if (gameOver == false){
                 
                 //Posiciones actualizandose de Nave Fuego,Nave no Fuego y GeoNave + Movimiento segun el angulo de la nave
                 nave.movAN();
+                
                 //Visibilidad de la nave sin fuego y con Fuego
                 nave.autoVisi();
+                
                 //posicion de Frenaje
                 nave.posiFreno();
+                
                 //Decremento de velocidad de angulo , Posicion y Rotacion de las "Naves" + asteroide
                 nave.decreAn();
+                
                 /*Posicion y Rotacion de la Nave Geometrica,Imagen y Asteroides*/
                 nave.rotaAUTO();
+                
                 //Rotacion entre 0 y 360
                 nave.rota360();
 
@@ -181,10 +241,16 @@ public class Main extends Application {
                     bala = listaBala.get(i);
                     bala.mover();
                 }
-
-                if (getColisionN(asteroide.getAsteroide(),nave.morro)){
-                    gameOver = true;
+                
+                //Compruebo si asteroide choco contra el morro de la nave
+                for(int i = 0; i < listaAsteroides.size() ; i++){
+                    asteroide = listaAsteroides.get(i);
+                    if (getColisionN(asteroide.getAsteroide(),nave.morro)){
+                        gameOver = true;
+                    }      
                 }
+                
+                //Comprobar si la bala choco contra asteroide
                 for (int i = 0 ; i < listaBala.size() ; i++) {
                     bala= listaBala.get(i);
                     for (int b= 0 ; b < listaAsteroides.size(); b++){
@@ -192,19 +258,33 @@ public class Main extends Application {
                         if (getColision(asteroide.getAsteroide(),bala.getBala())){
                             balaelimi = bala;
                             astelimi = asteroide; 
-                            astelimi.visible(false);
+                            double posiAsteX = astelimi.getTranslateX();
+                            double posiAsteY = astelimi.getTranslateY();
                             balaelimi.ver(false);
+                            ++score;
+                            textScore.setText(String.valueOf(score));
+                            asteroide.visible(false);
+                            asteroide = new Asteroide(0.5);
+                            asteroide.setTX(400);
+                            asteroide.setTY(400);
+                            root.getChildren().add(asteroide.getAsteroide());
+                            listaAsteroides.add(asteroide);   
+                            asteroide = new Asteroide(0.5);
+                            asteroide.setTX(450);
+                            asteroide.setTY(450);
+                            root.getChildren().add(asteroide.getAsteroide());
+                            listaAsteroides.add(asteroide);
                             listaBala.remove(balaelimi);
-                            listaAsteroides.remove(astelimi);
+                            listaAsteroides.remove(astelimi);                  
                         }
                     }
                 }
-                listaBala.remove(balaelimi);
+                
+
+                
                 //vuelta al plano
                 nave.vuelve();
-
-
-              
+ 
                 }
           }
       };
