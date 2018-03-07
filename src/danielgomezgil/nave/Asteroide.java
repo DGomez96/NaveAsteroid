@@ -30,9 +30,9 @@ public class Asteroide {
     
     public void mover(){
         
-        asteroide.setLayoutX(asteroide.getLayoutX() + veloAX);
-        asteroide.setLayoutY(asteroide.getLayoutY() + veloAY);
-        asteroide.setRotate(asteroide.getRotate() + 5);
+  //      asteroide.setLayoutX(asteroide.getLayoutX() + veloAX);
+  //      asteroide.setLayoutY(asteroide.getLayoutY() + veloAY);
+  //      asteroide.setRotate(asteroide.getRotate() + 5);
     }
     
     public Polygon getAsteroide(){

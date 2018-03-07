@@ -36,6 +36,10 @@ public class Bala {
         formBala.setCenterX(formBala.getCenterX() + posiBalaX);
         formBala.setCenterY(formBala.getCenterY() + posiBalaY);
     }
+    public boolean ver(boolean v){
+        formBala.setVisible(v);
+        return v;
+    }
     public Circle getBala(){
         return formBala;
     }

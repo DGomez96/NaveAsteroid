@@ -6,7 +6,6 @@
 package danielgomezgil.nave;
 
 import java.util.ArrayList;
-import java.util.Random;
 import javafx.animation.AnimationTimer;
 import javafx.scene.input.KeyEvent;
 import javafx.application.Application;
@@ -39,7 +38,10 @@ public class Main extends Application {
     Scene scene;
     Asteroide asteroide;
     Bala bala = new Bala();
-
+    //Bala a eliminar
+    Bala balaelimi;
+    //Asteroide a eliminar
+    Asteroide astelimi;
     // ArrayLists de Balas y Asteroides
     ArrayList<Bala> listaBala = new ArrayList();
     ArrayList<Asteroide> listaAsteroides = new ArrayList();
@@ -180,14 +182,24 @@ public class Main extends Application {
                     bala.mover();
                 }
 
-                if (asteroide != null){
-                    if (getColisionN(asteroide.getAsteroide(),nave.morro)){
-                        gameOver = true;
-                    }else if (getColision(asteroide.getAsteroide(),bala.getBala())){
-                        asteroide.visible(false);
-                        listaAsteroides.remove(asteroide.getAsteroide());
+                if (getColisionN(asteroide.getAsteroide(),nave.morro)){
+                    gameOver = true;
+                }
+                for (int i = 0 ; i < listaBala.size() ; i++) {
+                    bala= listaBala.get(i);
+                    for (int b= 0 ; b < listaAsteroides.size(); b++){
+                        asteroide = listaAsteroides.get(b);
+                        if (getColision(asteroide.getAsteroide(),bala.getBala())){
+                            balaelimi = bala;
+                            astelimi = asteroide; 
+                            astelimi.visible(false);
+                            balaelimi.ver(false);
+                            listaBala.remove(balaelimi);
+                            listaAsteroides.remove(astelimi);
+                        }
                     }
                 }
+                listaBala.remove(balaelimi);
                 //vuelta al plano
                 nave.vuelve();
 
