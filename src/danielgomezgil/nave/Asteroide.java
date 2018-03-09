@@ -24,14 +24,30 @@ public class Asteroide {
             50.0 *tam , 20.0 *tam,
             50.0 *tam , 20.0 * tam,
          });
-        asteroide.setTranslateX(aleato.nextInt(800));
-        asteroide.setTranslateY(aleato.nextInt(600));
+        asteroide.setLayoutX(aleato.nextInt(800));
+        asteroide.setLayoutY(aleato.nextInt(600));
     }
     
     public void mover(){    
-//       asteroide.setLayoutX(asteroide.getLayoutX() + veloAX);
-//       asteroide.setLayoutY(asteroide.getLayoutY() + veloAY);
-//       asteroide.setRotate(asteroide.getRotate() + 25);
+       asteroide.setLayoutX(asteroide.getLayoutX() + veloAX);
+       asteroide.setLayoutY(asteroide.getLayoutY() + veloAY);
+       asteroide.setRotate(asteroide.getRotate() + 150);
+    }
+    
+    public void vuelve(){
+    if (asteroide.getLayoutX() >= 800 ){
+        asteroide.setLayoutX(-1);
+        System.out.println("caso 1");
+    }else if(asteroide.getLayoutX() <= -2 ){
+        asteroide.setLayoutX(800);
+        System.out.println("caso 2");
+    }else if ( asteroide.getLayoutY() <= 0){
+        asteroide.setLayoutY(600);
+        System.out.println("caso 3");
+    }else if (asteroide.getLayoutY() >= 600){
+        asteroide.setLayoutY(0);
+        System.out.println("caso 4");
+    }
     }
     
     public Polygon getAsteroide(){

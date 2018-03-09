@@ -33,9 +33,12 @@ import javafx.scene.text.Text;
 
 public class Main extends Application {
     //!---------------------------------------------------------------------!
-    //Mini asteroides
-    Asteroide asteroideMini;
-    Asteroide asteroideMini2;
+    //Booleanas de Asteroides por Fases
+    boolean fase = false;
+    int numFase = 0;
+    //Variables de posicion Asteroide Eliminado en distintas fases. 
+    double posiAsteX;
+    double posiAsteY;
     //Variable cambio de Style
     int cambioStyle = 0;
    // String & Labels
@@ -189,7 +192,7 @@ public class Main extends Application {
             });
         });
         //Recorrer Lista Asteroides
-        for ( int i = 0 ; i < 3; i++){
+        for ( int i = 0 ; i < 1 ; i++){
             asteroide = new Asteroide(1);
             listaAsteroides.add(asteroide);
             root.getChildren().add(asteroide.getAsteroide());
@@ -199,8 +202,10 @@ public class Main extends Application {
         primaryStage.show();
 
          AnimationTimer movNav = new AnimationTimer(){
+                          
             @Override         
             public void handle(long now){
+
                  if (gameOver == true){
                 fin.setTranslateX(400);
                 fin.setTranslateY(300);
@@ -261,34 +266,57 @@ public class Main extends Application {
                         if (getColision(asteroide.getAsteroide(),bala.getBala())){
                             balaelimi = bala;
                             astelimi = asteroide; 
-                            double posiAsteX = astelimi.getTranslateX();
-                            double posiAsteY = astelimi.getTranslateY();
+                            posiAsteX = astelimi.getTranslateX();
+                            posiAsteY = astelimi.getTranslateY();
                             balaelimi.ver(false);
                             ++score;
                             textScore.setText(String.valueOf(score));
                             asteroide.visible(false);
-                            asteroideMini = new Asteroide(0.5);
-                            asteroideMini.setTX(posiAsteX);
-                            asteroideMini.setTY(posiAsteY);
-                            root.getChildren().add(asteroideMini.getAsteroide());  
-                            asteroideMini2 = new Asteroide(0.5);
-                            asteroideMini2.setTX(posiAsteX + 50);
-                            asteroideMini2.setTY(posiAsteY + 50);
-                            root.getChildren().add(asteroideMini2.getAsteroide());
-                            listaAsteroides.add(asteroideMini);
-                            listaAsteroides.add(asteroideMini2);
+                            fase = true;
+                            numFase = 1;
                         }  
                     }
                 }
                 listaBala.remove(balaelimi);
                 listaAsteroides.remove(astelimi); 
-                
-
+                if (fase == true){
+                    asteroide = new Asteroide(0.5);
+                    asteroide.setTX(posiAsteX);
+                    asteroide.setTY(posiAsteY);
+                    posiAsteX = asteroide.getTranslateX();
+                    posiAsteY = asteroide.getTranslateY();
+                    listaAsteroides.add(asteroide);
+                    root.getChildren().add(asteroide.getAsteroide());  
+                    asteroide = new Asteroide(0.5);
+                    asteroide.setTX(posiAsteX +15);
+                    asteroide.setTY(posiAsteY +15);
+                    listaAsteroides.add(asteroide);
+                    root.getChildren().add(asteroide.getAsteroide());
+                    fase = false;
+                }
+//                else if (fase == true && numFase == 1 ){
+//                    System.out.println("FASE 2");
+//                    asteroide = new Asteroide(0.20);
+//                    asteroide.setTX(posiAsteX + 150);
+//                    asteroide.setTY(posiAsteY + 150);
+//                    root.getChildren().add(asteroide.getAsteroide());  
+//                    asteroide = new Asteroide(0.20);
+//                    asteroide.setTX(posiAsteX + 15);
+//                    asteroide.setTY(posiAsteY + 15);
+//                    root.getChildren().add(asteroide.getAsteroide());
+//                    fase = false;
+//                    numFase = 0;
+//                }
                 
                 //vuelta al plano
                 nave.vuelve();
- 
+                //Vuelta al plano de los asteroides
+                for (int i = 0 ;  i < listaAsteroides.size() ; i++){
+                    asteroide = listaAsteroides.get(i);
+                    asteroide.vuelve();
                 }
+                    
+                }                
           }
       };
    movNav.start(); 
