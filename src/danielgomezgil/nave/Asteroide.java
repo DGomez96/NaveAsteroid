@@ -17,21 +17,24 @@ public class Asteroide {
     
     public Asteroide( double tam ){
     asteroide = new Polygon();
-    asteroide.setFill(Color.RED);
+    asteroide.setFill(Color.AQUA);
         asteroide.getPoints().addAll(new Double[]{
-            0.0, 0.0,
-            0.0, 20.0 * tam,
-            50.0 *tam , 20.0 *tam,
-            50.0 *tam , 20.0 * tam,
+            100.0 *tam, 25.0 *tam, 
+            200.0 *tam, 25.0*tam, 
+            250.0 *tam, 75.0*tam,          
+            200.0 *tam, 125.0*tam, 
+            100.0 *tam, 125.0*tam,                   
+            50.0 *tam, 50.0*tam, 
          });
         asteroide.setLayoutX(aleato.nextInt(800));
         asteroide.setLayoutY(aleato.nextInt(600));
     }
     
-    public void mover(){    
+    public void mover(){
+       aleato = new Random();
        asteroide.setLayoutX(asteroide.getLayoutX() + veloAX);
        asteroide.setLayoutY(asteroide.getLayoutY() + veloAY);
-       asteroide.setRotate(asteroide.getRotate() + 150);
+       asteroide.setRotate(asteroide.getRotate() + aleato.nextInt(16));
     }
     
     public void vuelve(){

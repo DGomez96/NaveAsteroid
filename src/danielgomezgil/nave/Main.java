@@ -9,12 +9,14 @@ import java.util.ArrayList;
 import javafx.animation.AnimationTimer;
 import javafx.scene.input.KeyEvent;
 import javafx.application.Application;
+import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.Scene; 
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import static javafx.scene.input.KeyCode.UP;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import static javafx.scene.paint.Color.WHITE;
@@ -73,7 +75,24 @@ public class Main extends Application {
         brocha.setLayoutX(750);
         brocha.setLayoutY(550);
         root.getChildren().add(brocha);
-       // brocha.setOnMouseClicked();
+        brocha.setOnMouseClicked(new EventHandler<MouseEvent>(){
+            @Override
+            public void handle(MouseEvent event) {
+            if (cambioStyle == 0 ){
+                scene.getStylesheets().add("css/style1.css");
+                cambioStyle = 1;
+            }else if ( cambioStyle == 1){
+                scene.getStylesheets().add("css/style2.css");
+                cambioStyle = 2;
+            }else if( cambioStyle == 2){
+                scene.getStylesheets().add("css/style3.css");
+                cambioStyle = 3 ;
+            }else if ( cambioStyle == 3){
+                scene.getStylesheets().add("css/style.css");
+                cambioStyle = 0;
+                }    
+            }
+        });
 
        //Layouts para puntuaciones.
        //Layout Principal
@@ -161,28 +180,11 @@ public class Main extends Application {
                     nave.freno(false);
                 }
                 break;   
-            case S: 
-                if (cambioStyle == 0 ){
-                    scene.getStylesheets().add("css/style1.css");
-                    cambioStyle = 1;
-                }else if ( cambioStyle == 1){
-                    scene.getStylesheets().add("css/style2.css");
-                    cambioStyle = 2;
-                }else if( cambioStyle == 2){
-                    scene.getStylesheets().add("css/style3.css");
-                    cambioStyle = 3 ;
-                }else if ( cambioStyle == 3){
-                    scene.getStylesheets().add("css/style.css");
-                    cambioStyle = 0;
-                }
-                System.out.println(cambioStyle);
-                break;
             case N:
                 gameOver = false;
                 fin.setVisible(false);
                 nave.setVisibilidadNoFuego(true);
                 break;
-                
             }
         scene.setOnKeyReleased((KeyEvent event1) -> {   
             nave.setVisibilidadNoFuego(true);
