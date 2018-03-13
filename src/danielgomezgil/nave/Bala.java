@@ -19,7 +19,7 @@ public class Bala {
     private final Circle formBala = new Circle();
     
     public Bala(){
-        formBala.setRadius(5);
+        formBala.setRadius(3);
         formBala.setFill(Color.LIGHTSKYBLUE);
     }
     

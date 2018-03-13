@@ -19,6 +19,7 @@ import static javafx.scene.input.KeyCode.UP;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
+import static javafx.scene.paint.Color.RED;
 import static javafx.scene.paint.Color.WHITE;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Polygon;
@@ -60,6 +61,9 @@ public class Main extends Application {
     //Layout Score y Score
     Text textScore;
     int score;
+    int numOleada = 1;
+    //Seleccion de Oleada
+    boolean setOleada;
     // ArrayLists de Balas y Asteroides
     ArrayList<Bala> listaBala = new ArrayList();
     ArrayList<Asteroide> listaAsteroides = new ArrayList();
@@ -117,10 +121,22 @@ public class Main extends Application {
        textScore = new Text("0");
        textScore.setFont(Font.font(15));
        textScore.setFill(WHITE);
+       
+       //Texto de la Etiqueta de la puntuacion
+       Text oleada = new Text("Oleada: ");
+       oleada.setFont(Font.font(15));
+       oleada.setFill(RED);
+       
+       //Texto para la puntuacion
+       Text oleadaT = new Text("1");
+       oleadaT.setFont(Font.font(15));
+       oleadaT.setFill(RED);
 
        //Añadir textos
        paneCurrentScore.getChildren().add(textTitleScore);
        paneCurrentScore.getChildren().add(textScore);
+       paneCurrentScore.getChildren().add(oleada);
+       paneCurrentScore.getChildren().add(oleadaT);
        root.getChildren().add(paneCurrentScore);
        
         scene = new Scene(root, 800 , 600);
@@ -194,7 +210,7 @@ public class Main extends Application {
             });
         });
         //Recorrer Lista Asteroides
-        for ( int i = 0 ; i < 1 ; i++){
+        for ( int i = 0 ; i < 5 ; i++){
             asteroide = new Asteroide(1);
             listaAsteroides.add(asteroide);
             root.getChildren().add(asteroide.getAsteroide());
@@ -274,41 +290,23 @@ public class Main extends Application {
                             ++score;
                             textScore.setText(String.valueOf(score));
                             asteroide.visible(false);
-                            fase = true;
-                            numFase = 1;
                         }  
                     }
                 }
                 listaBala.remove(balaelimi);
                 listaAsteroides.remove(astelimi); 
-                if (fase == true){
-                    asteroide = new Asteroide(0.5);
-                    asteroide.setTX(posiAsteX);
-                    asteroide.setTY(posiAsteY);
-                    posiAsteX = asteroide.getTranslateX();
-                    posiAsteY = asteroide.getTranslateY();
-                    listaAsteroides.add(asteroide);
-                    root.getChildren().add(asteroide.getAsteroide());  
-                    asteroide = new Asteroide(0.5);
-                    asteroide.setTX(posiAsteX +15);
-                    asteroide.setTY(posiAsteY +15);
+                     System.out.println(numOleada);
+                if (score == 5 && setOleada == false){
+                    for ( int i = 0 ; i < 15 ; i++){
+                    asteroide = new Asteroide(1);
                     listaAsteroides.add(asteroide);
                     root.getChildren().add(asteroide.getAsteroide());
-                    fase = false;
+                    score = 0;
+                    setOleada = true;
+                    numOleada = 2; 
+                    oleadaT.setText(String.valueOf(numOleada));
+                    }
                 }
-//                else if (fase == true && numFase == 1 ){
-//                    System.out.println("FASE 2");
-//                    asteroide = new Asteroide(0.20);
-//                    asteroide.setTX(posiAsteX + 150);
-//                    asteroide.setTY(posiAsteY + 150);
-//                    root.getChildren().add(asteroide.getAsteroide());  
-//                    asteroide = new Asteroide(0.20);
-//                    asteroide.setTX(posiAsteX + 15);
-//                    asteroide.setTY(posiAsteY + 15);
-//                    root.getChildren().add(asteroide.getAsteroide());
-//                    fase = false;
-//                    numFase = 0;
-//                }
                 
                 //vuelta al plano
                 nave.vuelve();

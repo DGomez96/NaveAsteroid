@@ -7,8 +7,8 @@ import javafx.scene.shape.Polygon;
 public class Asteroide {
     //Variables de clase
     Polygon asteroide;
-    double veloAX = 1;
-    double veloAY = 1; 
+    double veloAX = 0.5;
+    double veloAY = 0.5; 
     public double posiAX = 0 ; //Math.random() * (255 - 0) + 0;
     public double posiAY = 0 ;
     Random aleato = new Random();
@@ -27,7 +27,7 @@ public class Asteroide {
             50.0 *tam, 50.0*tam, 
          });
         asteroide.setLayoutX(aleato.nextInt(800));
-        asteroide.setLayoutY(aleato.nextInt(600));
+        asteroide.setLayoutY(aleato.nextInt(200));
     }
     
     public void mover(){
