@@ -225,7 +225,6 @@ public class Main extends Application {
 
                  if (gameOver == true){
                 
-                score = 0;
                 fin.setTranslateX(400);
                 fin.setTranslateY(300);
                 fin.setScaleX(2);
@@ -276,7 +275,11 @@ public class Main extends Application {
                         asteroide.visible(false);
                         listaAsteroides.remove(asteroide);
                         gameOver = true;
-                        asteroide = new Asteroide(1,1);
+                        if ( setOleada == true){
+                            asteroide = new Asteroide (1,2);
+                        }else if(setOleada == false){
+                            asteroide = new Asteroide (1,1);
+                        }
                         listaAsteroides.add(asteroide);
                         root.getChildren().add(asteroide.getAsteroide());
                         
@@ -304,7 +307,7 @@ public class Main extends Application {
                 listaAsteroides.remove(astelimi); 
                 
                 if (score == 5 && setOleada == false){
-                    for ( int i = 0 ; i < 15 ; i++){
+                    for ( int i = 0 ; i < 10 ; i++){
                     asteroide = new Asteroide(1,2);
                     listaAsteroides.add(asteroide);
                     root.getChildren().add(asteroide.getAsteroide());

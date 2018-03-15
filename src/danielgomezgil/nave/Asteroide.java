@@ -5,7 +5,6 @@ import java.util.Random;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Polygon;
-import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
 public class Asteroide {
     //Variables de clase
@@ -20,24 +19,30 @@ public class Asteroide {
     //Variable de proteccion
     Circle protecN = new Circle();
     public Asteroide( double tam , int t ){
-    int tipo = t;
+        
     if (t == 1){
+        protecN.setRadius(200);
+        protecN.setVisible(false); 
+        protecN.setFill(Color.WHITE);
         asteroide = new Polygon();
         asteroide.setFill(Color.AQUA);
         asteroide.getPoints().addAll(25 * tam,25 * tam,50 *tam ,12.5 * tam,100 *tam,25 * tam,50 *tam,37.5 * tam);
-        asteroide.setLayoutX(aleato.nextInt(800));
-        asteroide.setLayoutY(aleato.nextInt(200));
-        if (ComprobarProteccion(asteroide,Main.nave.morro)){
-        asteroide.setLayoutX(aleato.nextInt(800));
-        asteroide.setLayoutY(aleato.nextInt(200));
+        asteroide.setLayoutX(aleato.nextInt(200) * -1);
+        asteroide.setLayoutY(aleato.nextInt(200) * -1);
+        if (ComprobarProteccion(asteroide,protecN)){
+        asteroide.setLayoutX(aleato.nextInt(800) * -1);
+        asteroide.setLayoutY(aleato.nextInt(200) *-1);
         }
     }else if (t == 2){
+        protecN.setRadius(200);
+        protecN.setVisible(false); 
+        protecN.setFill(Color.WHITE);
         asteroide = new Polygon();
         asteroide.setFill(Color.AQUA);
         asteroide.getPoints().addAll(100.0 * tam, 0.0 * tam,120.0 * tam, 20.0 * tam,120.0 * tam, 40.0 * tam,100.0* tam, 60.0 *tam  ,80.0 * tam, 40.0* tam, 80.0 * tam, 20.0 *tam,100.0 *tam , 0.0 *tam);
         asteroide.setLayoutX(aleato.nextInt(800));
         asteroide.setLayoutY(aleato.nextInt(200));
-            if (ComprobarProteccion(asteroide,Main.nave.morro)){
+            if (ComprobarProteccion(asteroide,protecN)){
             asteroide.setLayoutX(aleato.nextInt(800));
             asteroide.setLayoutY(aleato.nextInt(200));
             }  
@@ -51,14 +56,11 @@ public class Asteroide {
        asteroide.setRotate(asteroide.getRotate() + aleato.nextInt(16));
     }
     public Circle getProteccion(){
-       protecN.setRadius(200);
-       protecN.setVisible(false); 
-       protecN.setFill(Color.WHITE);
        return protecN;
     }
     public void setProtec(){
-        protecN.setTranslateX(Main.nave.getXFuego() +33);
-        protecN.setTranslateY(Main.nave.getYFuego() +25);
+        protecN.setLayoutX(Main.nave.getXFuego() +33);
+        protecN.setLayoutY(Main.nave.getYFuego() +25);
     }
     
     public void vuelve(){
@@ -113,7 +115,7 @@ public class Asteroide {
         asteroide.setRotate(rot + asteroide.getRotate());
     }
     
-    private boolean ComprobarProteccion(Polygon obj1, Rectangle obj2){
+    private boolean ComprobarProteccion(Polygon obj1, Circle obj2){
     return !Shape.intersect(obj1, obj2).getBoundsInLocal().isEmpty();
     } 
 }
