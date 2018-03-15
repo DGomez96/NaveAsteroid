@@ -36,9 +36,6 @@ import javafx.scene.text.Text;
 
 public class Main extends Application {
     //!---------------------------------------------------------------------!
-    //Booleanas de Asteroides por Fases
-    boolean fase = false;
-    int numFase = 0;
     //Variables de posicion Asteroide Eliminado en distintas fases. 
     double posiAsteX;
     double posiAsteY;
@@ -94,6 +91,7 @@ public class Main extends Application {
             }else if ( cambioStyle == 3){
                 scene.getStylesheets().add("css/style.css");
                 cambioStyle = 0;
+                System.out.println(cambioStyle);
                 }    
             }
         });
@@ -156,7 +154,7 @@ public class Main extends Application {
         nave.setVisibilidadFreno(false);
         root.getChildren().add(nave.navez);
         
-        // Arraylist de Asteroides
+        // Aqui añado la proteccion
         
         fin.setVisible(false);
         root.getChildren().add(fin);
@@ -211,10 +209,11 @@ public class Main extends Application {
         });
         //Recorrer Lista Asteroides
         for ( int i = 0 ; i < 5 ; i++){
-            asteroide = new Asteroide(1);
+            asteroide = new Asteroide(1,1);
             listaAsteroides.add(asteroide);
             root.getChildren().add(asteroide.getAsteroide());
         }
+        root.getChildren().add(asteroide.getProteccion());
         primaryStage.setTitle("Asteroid Game por Daniel Gómez");
         primaryStage.setScene(scene);
         primaryStage.show();
@@ -236,7 +235,8 @@ public class Main extends Application {
 
                 fin.setVisible(true);    
                }else if (gameOver == false){
-                
+                //Meto la proteccion
+                asteroide.setProtec();
                 //Posiciones actualizandose de Nave Fuego,Nave no Fuego y GeoNave + Movimiento segun el angulo de la nave
                 nave.movAN();
                 
@@ -255,7 +255,6 @@ public class Main extends Application {
                 //Rotacion entre 0 y 360
                 nave.rota360();
 
-
                 //Mover asteroides
                 for (int i = 0 ; i < listaAsteroides.size(); i++){
                     asteroide = listaAsteroides.get(i);
@@ -267,11 +266,12 @@ public class Main extends Application {
                     bala = listaBala.get(i);
                     bala.mover();
                 }
-                
                 //Compruebo si asteroide choco contra el morro de la nave
                 for(int i = 0; i < listaAsteroides.size() ; i++){
                     asteroide = listaAsteroides.get(i);
                     if (getColisionN(asteroide.getAsteroide(),nave.morro)){
+                        asteroide.visible(false);
+                        listaAsteroides.remove(asteroide);
                         gameOver = true;
                     }      
                 }
@@ -295,10 +295,10 @@ public class Main extends Application {
                 }
                 listaBala.remove(balaelimi);
                 listaAsteroides.remove(astelimi); 
-                     System.out.println(numOleada);
+                
                 if (score == 5 && setOleada == false){
                     for ( int i = 0 ; i < 15 ; i++){
-                    asteroide = new Asteroide(1);
+                    asteroide = new Asteroide(1,2);
                     listaAsteroides.add(asteroide);
                     root.getChildren().add(asteroide.getAsteroide());
                     score = 0;
