@@ -15,14 +15,12 @@ public class Asteroide {
     public double posiAX = 0 ; //Math.random() * (255 - 0) + 0;
     public double posiAY = 0 ;
     Random aleato = new Random();
-    int tipo;
-    double size;
     //*****************
+    //Variable del tipo de asteroide
     //Variable de proteccion
     Circle protecN = new Circle();
     public Asteroide( double tam , int t ){
-    t = tipo;
-    tam =size;
+    int tipo = t;
     if (t == 1){
         asteroide = new Polygon();
         asteroide.setFill(Color.AQUA);
@@ -39,13 +37,11 @@ public class Asteroide {
         asteroide.getPoints().addAll(100.0 * tam, 0.0 * tam,120.0 * tam, 20.0 * tam,120.0 * tam, 40.0 * tam,100.0* tam, 60.0 *tam  ,80.0 * tam, 40.0* tam, 80.0 * tam, 20.0 *tam,100.0 *tam , 0.0 *tam);
         asteroide.setLayoutX(aleato.nextInt(800));
         asteroide.setLayoutY(aleato.nextInt(200));
-        if (ComprobarProteccion(asteroide,Main.nave.morro)){
-        asteroide.setLayoutX(aleato.nextInt(800));
-        asteroide.setLayoutY(aleato.nextInt(200));
-        }
-        
-    }
-    
+            if (ComprobarProteccion(asteroide,Main.nave.morro)){
+            asteroide.setLayoutX(aleato.nextInt(800));
+            asteroide.setLayoutY(aleato.nextInt(200));
+            }  
+         }
     }
 
     public void mover(){

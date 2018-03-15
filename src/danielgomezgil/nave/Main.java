@@ -224,6 +224,8 @@ public class Main extends Application {
             public void handle(long now){
 
                  if (gameOver == true){
+                
+                score = 0;
                 fin.setTranslateX(400);
                 fin.setTranslateY(300);
                 fin.setScaleX(2);
@@ -266,6 +268,7 @@ public class Main extends Application {
                     bala = listaBala.get(i);
                     bala.mover();
                 }
+                
                 //Compruebo si asteroide choco contra el morro de la nave
                 for(int i = 0; i < listaAsteroides.size() ; i++){
                     asteroide = listaAsteroides.get(i);
@@ -273,6 +276,10 @@ public class Main extends Application {
                         asteroide.visible(false);
                         listaAsteroides.remove(asteroide);
                         gameOver = true;
+                        asteroide = new Asteroide(1,1);
+                        listaAsteroides.add(asteroide);
+                        root.getChildren().add(asteroide.getAsteroide());
+                        
                     }      
                 }
                 
