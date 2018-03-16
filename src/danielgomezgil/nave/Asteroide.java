@@ -27,11 +27,11 @@ public class Asteroide {
         asteroide = new Polygon();
         asteroide.setFill(Color.AQUA);
         asteroide.getPoints().addAll(25 * tam,25 * tam,50 *tam ,12.5 * tam,100 *tam,25 * tam,50 *tam,37.5 * tam);
-        asteroide.setLayoutX(aleato.nextInt(200) * -1);
-        asteroide.setLayoutY(aleato.nextInt(200) * -1);
+        asteroide.setLayoutX(aleato.nextInt(800) );
+        asteroide.setLayoutY(aleato.nextInt(400));
         if (ComprobarProteccion(asteroide,protecN)){
-        asteroide.setLayoutX(aleato.nextInt(800) * -1);
-        asteroide.setLayoutY(aleato.nextInt(200) *-1);
+        asteroide.setLayoutX(aleato.nextInt(800) );
+        asteroide.setLayoutY(aleato.nextInt(400) );
         }
     }else if (t == 2){
         protecN.setRadius(200);
@@ -41,10 +41,10 @@ public class Asteroide {
         asteroide.setFill(Color.AQUA);
         asteroide.getPoints().addAll(100.0 * tam, 0.0 * tam,120.0 * tam, 20.0 * tam,120.0 * tam, 40.0 * tam,100.0* tam, 60.0 *tam  ,80.0 * tam, 40.0* tam, 80.0 * tam, 20.0 *tam,100.0 *tam , 0.0 *tam);
         asteroide.setLayoutX(aleato.nextInt(800));
-        asteroide.setLayoutY(aleato.nextInt(200));
+        asteroide.setLayoutY(aleato.nextInt(400));
             if (ComprobarProteccion(asteroide,protecN)){
             asteroide.setLayoutX(aleato.nextInt(800));
-            asteroide.setLayoutY(aleato.nextInt(200));
+            asteroide.setLayoutY(aleato.nextInt(400));
             }  
          }
     }

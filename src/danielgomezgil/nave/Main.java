@@ -71,8 +71,7 @@ public class Main extends Application {
         public void start(Stage primaryStage) {
         primaryStage.getIcons().add(new Image("Logo/Logo.png"));
         fin.setStyle("--fx-background-color: #" + Color);
-        Image brochita = new Image("brocha.png");
-        ImageView brocha = new ImageView(brochita);
+        ImageView brocha = new ImageView("brocha.png");
         brocha.setLayoutX(750);
         brocha.setLayoutY(550);
         root.getChildren().add(brocha);
@@ -311,7 +310,6 @@ public class Main extends Application {
                     asteroide = new Asteroide(1,2);
                     listaAsteroides.add(asteroide);
                     root.getChildren().add(asteroide.getAsteroide());
-                    score = 0;
                     setOleada = true;
                     numOleada = 2; 
                     oleadaT.setText(String.valueOf(numOleada));
